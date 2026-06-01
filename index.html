@@ -7,172 +7,72 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #ffffff;
-      --bg-2: #f8f8f6;
-      --bg-3: #f1efe8;
-      --text: #2c2c2a;
-      --text-2: #5f5e5a;
-      --text-3: #888780;
-      --border: rgba(0,0,0,0.12);
-      --border-2: rgba(0,0,0,0.22);
-      --radius: 8px;
-      --radius-lg: 12px;
-      --success-bg: #eaf3de;
-      --success-text: #3b6d11;
-      --success-border: #97c459;
-      --success-strong: #639922;
-      --danger-bg: #fcebeb;
-      --danger-text: #a32d2d;
-      --danger-border: #f09595;
-      --info-bg: #e6f1fb;
-      --info-text: #185fa5;
+      --bg: #ffffff; --bg-2: #f8f8f6; --bg-3: #f1efe8; --text: #2c2c2a;
+      --text-2: #5f5e5a; --text-3: #888780; --border: rgba(0,0,0,0.12);
+      --border-2: rgba(0,0,0,0.22); --radius: 8px; --radius-lg: 12px;
+      --success-bg: #eaf3de; --success-text: #3b6d11; --success-border: #97c459;
+      --success-strong: #639922; --danger-bg: #fcebeb; --danger-text: #a32d2d;
+      --danger-border: #f09595; --info-bg: #e6f1fb; --info-text: #185fa5;
       --input-border: rgba(0,0,0,0.4);
     }
-
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #1a1a18;
-        --bg-2: #222220;
-        --bg-3: #2c2c2a;
-        --text: #f1efe8;
-        --text-2: #b4b2a9;
-        --text-3: #888780;
-        --border: rgba(255,255,255,0.12);
-        --border-2: rgba(255,255,255,0.22);
-        --success-bg: #1a3a08;
-        --success-text: #97c459;
-        --success-border: #3b6d11;
-        --success-strong: #c0dd97;
-        --danger-bg: #3a0808;
-        --danger-text: #f09595;
-        --danger-border: #a32d2d;
-        --info-bg: #0a2545;
-        --info-text: #85b7eb;
-        --input-border: rgba(255,255,255,0.4);
+        --bg: #1a1a18; --bg-2: #222220; --bg-3: #2c2c2a; --text: #f1efe8;
+        --text-2: #b4b2a9; --text-3: #888780; --border: rgba(255,255,255,0.12);
+        --border-2: rgba(255,255,255,0.22); --success-bg: #1a3a08;
+        --success-text: #97c459; --success-border: #3b6d11; --success-strong: #c0dd97;
+        --danger-bg: #3a0808; --danger-text: #f09595; --danger-border: #a32d2d;
+        --info-bg: #0a2545; --info-text: #85b7eb; --input-border: rgba(255,255,255,0.4);
       }
     }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-      background: var(--bg-3);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 2rem 1.5rem;
-    }
-
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: var(--bg-3); color: var(--text); min-height: 100vh; padding: 2rem 1.5rem; }
     .page { max-width: 1400px; margin: 0 auto; }
-
-    .top-bar {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 0.5rem; flex-wrap: wrap;
-    }
+    .top-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 0.5rem; flex-wrap: wrap; }
     h1 { font-size: 22px; font-weight: 500; }
     .subtitle { font-size: 14px; color: var(--text-2); margin-bottom: 1.5rem; }
-
-    .badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 5px 14px; border-radius: var(--radius);
-      font-size: 13px; font-weight: 500;
-      background: var(--info-bg); color: var(--info-text);
-    }
-
-    .controls {
-      display: flex; gap: 12px; flex-wrap: wrap;
-      margin-bottom: 1.25rem; align-items: stretch;
-    }
-
-    .control-card {
-      background: var(--bg);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 0.75rem 1rem;
-    }
-
-    .control-label {
-      font-size: 11px; color: var(--text-2);
-      text-transform: uppercase; letter-spacing: .04em;
-      display: block; margin-bottom: 6px;
-    }
-
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: var(--radius); font-size: 13px; font-weight: 500; background: var(--info-bg); color: var(--info-text); }
+    .controls { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 1.25rem; align-items: stretch; }
+    .control-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 0.75rem 1rem; }
+    .control-label { font-size: 11px; color: var(--text-2); text-transform: uppercase; letter-spacing: .04em; display: block; margin-bottom: 6px; }
     .big-input-wrap { display: flex; align-items: baseline; gap: 4px; }
-    .big-input {
-      width: 60px; font-size: 22px; font-weight: 500;
-      border: none; border-bottom: 1.5px solid var(--input-border);
-      padding: 2px 4px; background: transparent; color: var(--text);
-      border-radius: 0; outline: none;
-    }
+    .big-input { width: 60px; font-size: 22px; font-weight: 500; border: none; border-bottom: 1.5px solid var(--input-border); padding: 2px 4px; background: transparent; color: var(--text); border-radius: 0; outline: none; }
     .big-unit { font-size: 15px; color: var(--text-2); }
-
-    .legend {
-      display: flex; gap: 14px; margin-bottom: 1rem;
-      font-size: 11px; color: var(--text-2); flex-wrap: wrap; align-items: center;
-    }
+    .legend { display: flex; gap: 14px; margin-bottom: 1rem; font-size: 11px; color: var(--text-2); flex-wrap: wrap; align-items: center; }
     .legend-label { font-weight: 500; color: var(--text); font-size: 12px; }
     .legend-item { display: flex; align-items: center; gap: 5px; }
     .legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
-
-    .table-wrap {
-      overflow-x: auto;
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-lg);
-      background: var(--bg);
-    }
-
+    .table-wrap { overflow-x: auto; border: 0.5px solid var(--border); border-radius: var(--radius-lg); background: var(--bg); }
     table { border-collapse: collapse; white-space: nowrap; font-size: 12px; width: 100%; }
     thead tr { background: var(--bg-3); }
-
-    th {
-      padding: 8px 10px; font-size: 11px; font-weight: 500;
-      color: var(--text-2); border-bottom: 0.5px solid var(--border-2);
-      text-align: right;
-    }
+    th { padding: 8px 10px; font-size: 11px; font-weight: 500; color: var(--text-2); border-bottom: 0.5px solid var(--border-2); text-align: right; }
     th:first-child { text-align: left; position: sticky; left: 0; background: var(--bg-3); min-width: 100px; }
     th:nth-child(2) { text-align: center; min-width: 90px; }
     th:nth-child(3) { text-align: left; min-width: 80px; }
     th.year1 { border-left: 0.5px solid var(--border-2); font-weight: 500; color: var(--text); }
-
-    td {
-      padding: 6px 10px; border-bottom: 0.5px solid var(--border);
-      text-align: right; color: var(--text);
-    }
-    td:first-child {
-      text-align: left; font-weight: 500; font-size: 14px;
-      position: sticky; left: 0; background: var(--bg);
-      border-right: 0.5px solid var(--border-2);
-    }
+    td { padding: 6px 10px; border-bottom: 0.5px solid var(--border); text-align: right; color: var(--text); }
+    td:first-child { text-align: left; font-weight: 500; font-size: 14px; position: sticky; left: 0; background: var(--bg); border-right: 0.5px solid var(--border-2); }
     td:nth-child(2) { text-align: center; }
     td:nth-child(3) { text-align: left; }
     td.year1 { border-left: 0.5px solid var(--border-2); font-weight: 500; }
     td.compound { color: var(--text-2); font-style: italic; }
     td.compound.year1 { color: var(--text-2); }
-
-    .apr-badge {
-      display: inline-block; padding: 2px 8px;
-      border-radius: var(--radius); font-size: 11px; font-weight: 500;
-    }
+    .apr-badge { display: inline-block; padding: 2px 8px; border-radius: var(--radius); font-size: 11px; font-weight: 500; }
     .apr-below   { background: var(--danger-bg);  color: var(--danger-text); }
     .apr-meets   { background: var(--success-bg); color: var(--success-text); }
     .apr-exceeds { background: var(--success-strong); color: #fff; }
-
     tr.cap-sep td   { border-bottom: 1.5px solid var(--border-2); }
     tr.cap-first td { border-top: 1.5px solid var(--border-2); }
-
     footer { margin-top: 2rem; font-size: 11px; color: var(--text-3); }
   </style>
 </head>
 <body>
 <div class="page">
-
   <div class="top-bar">
     <h1>RockawayX Deal Terms</h1>
-    <span class="badge">
-      <i class="ti ti-lock" style="font-size:14px;"></i>1 year lockup
-    </span>
+    <span class="badge"><i class="ti ti-lock" style="font-size:14px;"></i>1 year lockup</span>
   </div>
-  <p class="subtitle">RockawayX hurdle: 15–20% APR &nbsp;·&nbsp; Adjust APR below — table updates instantly</p>
-
+  <p class="subtitle">RockawayX hurdle: 15-20% APR · Adjust APR below - table updates instantly</p>
   <div class="controls">
     <div class="control-card">
       <span class="control-label">APR</span>
@@ -182,80 +82,53 @@
       </div>
     </div>
   </div>
-
   <div class="legend">
     <span class="legend-label">APR status:</span>
     <span class="legend-item"><span class="legend-dot" style="background:var(--danger-bg);border:0.5px solid var(--danger-border);"></span>Below 15%</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--success-bg);border:0.5px solid var(--success-border);"></span>15–20% (meets minimum)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--success-bg);border:0.5px solid var(--success-border);"></span>15-20% (meets minimum)</span>
     <span class="legend-item"><span class="legend-dot" style="background:var(--success-strong);"></span>Above 20% (exceeds hurdle)</span>
     <span class="legend-item" style="font-style:italic;">Italic rows = compound interest</span>
   </div>
-
   <div class="table-wrap">
     <table>
       <thead id="rwxHead"></thead>
       <tbody id="rwxBody"></tbody>
     </table>
   </div>
-
-  <footer>Alkimi Exchange &nbsp;·&nbsp; AdFi fundraising — RockawayX deal modelling</footer>
+  <footer>Alkimi Exchange · AdFi fundraising - RockawayX deal modelling</footer>
 </div>
-
 <script>
 const CAPS = [1e6, 3e6, 6e6, 10e6];
 let APR = 15;
-
-const fmt = v => v >= 1e6 ? '£'+(v/1e6).toFixed(3)+'M' : v >= 1e3 ? '£'+(v/1e3).toFixed(1)+'k' : '£'+Math.round(v);
-const fmtCap = v => '£'+(v/1e6).toFixed(0)+'M';
-
+const fmt = v => v >= 1e6 ? String.fromCharCode(163)+(v/1e6).toFixed(3)+'M' : v >= 1e3 ? String.fromCharCode(163)+(v/1e3).toFixed(1)+'k' : String.fromCharCode(163)+Math.round(v);
+const fmtCap = v => String.fromCharCode(163)+(v/1e6).toFixed(0)+'M';
 function aprBadge(a) {
-  if (a >= 20) return `<span class="apr-badge apr-exceeds">${a.toFixed(2)}% <i class="ti ti-trending-up" style="font-size:11px;"></i></span>`;
-  if (a >= 15) return `<span class="apr-badge apr-meets">${a.toFixed(2)}%</span>`;
-  return `<span class="apr-badge apr-below">${a.toFixed(2)}%</span>`;
+  if (a >= 20) return '<span class="apr-badge apr-exceeds">'+a.toFixed(2)+'% <i class="ti ti-trending-up" style="font-size:11px;"></i></span>';
+  if (a >= 15) return '<span class="apr-badge apr-meets">'+a.toFixed(2)+'%</span>';
+  return '<span class="apr-badge apr-below">'+a.toFixed(2)+'%</span>';
 }
-
-function mSimple(cap, apr)        { return cap * apr / 100 / 12; }
-function mCompound(cap, apr, m)   { const r = apr/100/12; return cap * r * Math.pow(1+r, m-1); }
-function ySimple(cap, apr)        { return cap * apr / 100; }
-function yCompound(cap, apr)      { const r = apr/100/12; return cap * (Math.pow(1+r,12)-1); }
-
-function buildHead() {
-  const months = Array.from({length:12},(_,i)=>`<th>M${i+1}</th>`).join('');
-  document.getElementById('rwxHead').innerHTML =
-    `<tr><th>Capital lent</th><th>APR</th><th>Type</th>${months}<th class="year1">Year 1</th></tr>`;
+function mSimple(cap,apr){return cap*apr/100/12;}
+function mCompound(cap,apr,m){const r=apr/100/12;return cap*r*Math.pow(1+r,m-1);}
+function ySimple(cap,apr){return cap*apr/100;}
+function yCompound(cap,apr){const r=apr/100/12;return cap*(Math.pow(1+r,12)-1);}
+function buildHead(){
+  const months=Array.from({length:12},(_,i)=>'<th>M'+(i+1)+'</th>').join('');
+  document.getElementById('rwxHead').innerHTML='<tr><th>Capital lent</th><th>APR</th><th>Type</th>'+months+'<th class="year1">Year 1</th></tr>';
 }
-
-function buildBody() {
-  let html = '';
-  CAPS.forEach((cap, ci) => {
-    const isFirst = ci === 0;
-    const isLast  = ci === CAPS.length - 1;
-    const fst = !isFirst ? ' cap-first' : '';
-    const sep = !isLast  ? ' cap-sep'   : '';
-
-    const sMo = Array.from({length:12},()=>`<td>${fmt(mSimple(cap,APR))}</td>`).join('');
-    const cMo = Array.from({length:12},(_,m)=>`<td class="compound">${fmt(mCompound(cap,APR,m+1))}</td>`).join('');
-
-    html += `<tr class="${fst}">
-      <td rowspan="2" style="vertical-align:middle;">${fmtCap(cap)}</td>
-      <td rowspan="2" style="vertical-align:middle;">${aprBadge(APR)}</td>
-      <td style="font-weight:500;">Simple</td>
-      ${sMo}
-      <td class="year1">${fmt(ySimple(cap,APR))}</td>
-    </tr>`;
-    html += `<tr class="${sep}">
-      <td class="compound">Compound</td>
-      ${cMo}
-      <td class="compound year1">${fmt(yCompound(cap,APR))}</td>
-    </tr>`;
+function buildBody(){
+  let html='';
+  CAPS.forEach((cap,ci)=>{
+    const isFirst=ci===0,isLast=ci===CAPS.length-1;
+    const fst=!isFirst?' cap-first':'',sep=!isLast?' cap-sep':'';
+    const sMo=Array.from({length:12},()=>'<td>'+fmt(mSimple(cap,APR))+'</td>').join('');
+    const cMo=Array.from({length:12},(_,m)=>'<td class="compound">'+fmt(mCompound(cap,APR,m+1))+'</td>').join('');
+    html+='<tr class="'+fst+'"><td rowspan="2" style="vertical-align:middle;">'+fmtCap(cap)+'</td><td rowspan="2" style="vertical-align:middle;">'+aprBadge(APR)+'</td><td style="font-weight:500;">Simple</td>'+sMo+'<td class="year1">'+fmt(ySimple(cap,APR))+'</td></tr>';
+    html+='<tr class="'+sep+'"><td class="compound">Compound</td>'+cMo+'<td class="compound year1">'+fmt(yCompound(cap,APR))+'</td></tr>';
   });
-  document.getElementById('rwxBody').innerHTML = html;
+  document.getElementById('rwxBody').innerHTML=html;
 }
-
-function refresh() { buildHead(); buildBody(); }
-
-document.getElementById('baseAPR').addEventListener('input', e => { APR = +e.target.value || 0; refresh(); });
-
+function refresh(){buildHead();buildBody();}
+document.getElementById('baseAPR').addEventListener('input',e=>{APR=+e.target.value||0;refresh();});
 refresh();
 </script>
 </body>

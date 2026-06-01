@@ -17,7 +17,6 @@
       --text-3: #888780;
       --border: rgba(0,0,0,0.12);
       --border-2: rgba(0,0,0,0.22);
-      --border-3: rgba(0,0,0,0.35);
       --radius: 8px;
       --radius-lg: 12px;
       --success-bg: #eaf3de;
@@ -29,10 +28,6 @@
       --danger-border: #f09595;
       --info-bg: #e6f1fb;
       --info-text: #185fa5;
-      --warning-bg: #faeeda;
-      --warning-text: #854f0b;
-      --warning-border: #ef9f27;
-      --header-bg: #d3d1c7;
       --input-border: rgba(0,0,0,0.4);
     }
 
@@ -46,7 +41,6 @@
         --text-3: #888780;
         --border: rgba(255,255,255,0.12);
         --border-2: rgba(255,255,255,0.22);
-        --border-3: rgba(255,255,255,0.35);
         --success-bg: #1a3a08;
         --success-text: #97c459;
         --success-border: #3b6d11;
@@ -56,10 +50,6 @@
         --danger-border: #a32d2d;
         --info-bg: #0a2545;
         --info-text: #85b7eb;
-        --warning-bg: #3a2508;
-        --warning-text: #fac775;
-        --warning-border: #ba7517;
-        --header-bg: #3a3a38;
         --input-border: rgba(255,255,255,0.4);
       }
     }
@@ -74,16 +64,19 @@
 
     .page { max-width: 1400px; margin: 0 auto; }
 
-    h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+    .top-bar {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 0.5rem; flex-wrap: wrap;
+    }
+    h1 { font-size: 22px; font-weight: 500; }
     .subtitle { font-size: 14px; color: var(--text-2); margin-bottom: 1.5rem; }
 
     .badge {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 5px 14px; border-radius: var(--radius);
       font-size: 13px; font-weight: 500;
+      background: var(--info-bg); color: var(--info-text);
     }
-    .badge-info { background: var(--info-bg); color: var(--info-text); }
-    .badge-warning { background: var(--warning-bg); color: var(--warning-text); }
 
     .controls {
       display: flex; gap: 12px; flex-wrap: wrap;
@@ -96,15 +89,12 @@
       border-radius: var(--radius-lg);
       padding: 0.75rem 1rem;
     }
-    .control-card.target { background: var(--warning-bg); border-color: var(--warning-border); }
-    .control-card.bps-card { flex: 1; min-width: 220px; }
 
     .control-label {
       font-size: 11px; color: var(--text-2);
       text-transform: uppercase; letter-spacing: .04em;
       display: block; margin-bottom: 6px;
     }
-    .control-card.target .control-label { color: var(--warning-text); }
 
     .big-input-wrap { display: flex; align-items: baseline; gap: 4px; }
     .big-input {
@@ -113,33 +103,7 @@
       padding: 2px 4px; background: transparent; color: var(--text);
       border-radius: 0; outline: none;
     }
-    .control-card.target .big-input { color: var(--warning-text); border-color: var(--warning-border); }
     .big-unit { font-size: 15px; color: var(--text-2); }
-    .control-card.target .big-unit { color: var(--warning-text); }
-    .needed-bps { font-size: 12px; color: var(--warning-text); margin-top: 6px; }
-
-    .bps-wrap { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 2px; }
-    .bps-tag {
-      display: inline-flex; align-items: center; gap: 3px;
-      background: var(--bg-2); border: 0.5px solid var(--border-2);
-      border-radius: var(--radius); padding: 3px 8px;
-    }
-    .bps-tag input {
-      width: 48px; font-size: 13px; text-align: center;
-      border: none; border-bottom: 1px solid var(--input-border);
-      background: transparent; color: var(--text); padding: 0 2px; outline: none;
-    }
-    .bps-tag .bps-unit { font-size: 11px; color: var(--text-2); }
-    .bps-tag .rm-btn {
-      background: none; border: none; cursor: pointer;
-      color: var(--text-2); font-size: 16px; line-height: 1; padding: 0 0 0 2px;
-    }
-    .add-btn {
-      font-size: 12px; padding: 4px 10px; cursor: pointer;
-      background: transparent; border: 0.5px solid var(--border-2);
-      border-radius: var(--radius); color: var(--text); font-family: inherit;
-    }
-    .add-btn:hover { background: var(--bg-2); }
 
     .legend {
       display: flex; gap: 14px; margin-bottom: 1rem;
@@ -157,7 +121,6 @@
     }
 
     table { border-collapse: collapse; white-space: nowrap; font-size: 12px; width: 100%; }
-
     thead tr { background: var(--bg-3); }
 
     th {
@@ -165,9 +128,9 @@
       color: var(--text-2); border-bottom: 0.5px solid var(--border-2);
       text-align: right;
     }
-    th:first-child { text-align: left; position: sticky; left: 0; background: var(--bg-3); min-width: 90px; }
-    th:nth-child(2), th:nth-child(3), th:nth-child(4) { text-align: center; }
-    th:nth-child(4) { text-align: left; }
+    th:first-child { text-align: left; position: sticky; left: 0; background: var(--bg-3); min-width: 100px; }
+    th:nth-child(2) { text-align: center; min-width: 90px; }
+    th:nth-child(3) { text-align: left; min-width: 80px; }
     th.year1 { border-left: 0.5px solid var(--border-2); font-weight: 500; color: var(--text); }
 
     td {
@@ -179,8 +142,8 @@
       position: sticky; left: 0; background: var(--bg);
       border-right: 0.5px solid var(--border-2);
     }
-    td:nth-child(2), td:nth-child(3) { text-align: center; }
-    td:nth-child(4) { text-align: left; }
+    td:nth-child(2) { text-align: center; }
+    td:nth-child(3) { text-align: left; }
     td.year1 { border-left: 0.5px solid var(--border-2); font-weight: 500; }
     td.compound { color: var(--text-2); font-style: italic; }
     td.compound.year1 { color: var(--text-2); }
@@ -189,19 +152,11 @@
       display: inline-block; padding: 2px 8px;
       border-radius: var(--radius); font-size: 11px; font-weight: 500;
     }
-    .apr-below { background: var(--danger-bg); color: var(--danger-text); }
-    .apr-meets { background: var(--success-bg); color: var(--success-text); }
+    .apr-below   { background: var(--danger-bg);  color: var(--danger-text); }
+    .apr-meets   { background: var(--success-bg); color: var(--success-text); }
     .apr-exceeds { background: var(--success-strong); color: #fff; }
 
-    tr.target-row td { background: var(--warning-bg); }
-    tr.target-row td:first-child { background: var(--warning-bg); }
-    .target-badge {
-      display: inline-block; padding: 1px 6px;
-      border-radius: var(--radius); font-size: 10px; font-weight: 500;
-      background: var(--warning-bg); color: var(--warning-text);
-      border: 0.5px solid var(--warning-border);
-    }
-    tr.cap-sep td { border-bottom: 1.5px solid var(--border-2); }
+    tr.cap-sep td   { border-bottom: 1.5px solid var(--border-2); }
     tr.cap-first td { border-top: 1.5px solid var(--border-2); }
 
     footer { margin-top: 2rem; font-size: 11px; color: var(--text-3); }
@@ -210,40 +165,22 @@
 <body>
 <div class="page">
 
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;flex-wrap:wrap;">
+  <div class="top-bar">
     <h1>RockawayX Deal Terms</h1>
-    <span class="badge badge-info">
+    <span class="badge">
       <i class="ti ti-lock" style="font-size:14px;"></i>1 year lockup
     </span>
   </div>
-  <p class="subtitle">RockawayX hurdle: 15–20% APR &nbsp;·&nbsp; Adjust inputs below — table updates instantly</p>
+  <p class="subtitle">RockawayX hurdle: 15–20% APR &nbsp;·&nbsp; Adjust APR below — table updates instantly</p>
 
   <div class="controls">
-
     <div class="control-card">
-      <span class="control-label">Base cash APR</span>
+      <span class="control-label">APR</span>
       <div class="big-input-wrap">
         <input class="big-input" type="number" id="baseAPR" value="15" min="0" max="40" step="0.5">
         <span class="big-unit">%</span>
       </div>
     </div>
-
-    <div class="control-card bps-card">
-      <span class="control-label">Token / warrant sweetener (bps)</span>
-      <div class="bps-wrap" id="bpsWrap"></div>
-    </div>
-
-    <div class="control-card target">
-      <span class="control-label">Target total APR if &gt; 15%</span>
-      <div class="big-input-wrap">
-        <input class="big-input" type="number" id="targetAPR" value="17" min="0" max="50" step="0.5">
-        <span class="big-unit">%</span>
-      </div>
-      <p class="needed-bps">needs <strong id="neededBPS">200</strong> bps sweetener
-        <i class="ti ti-arrow-down" style="font-size:12px;vertical-align:-1px;"></i>
-      </p>
-    </div>
-
   </div>
 
   <div class="legend">
@@ -251,8 +188,7 @@
     <span class="legend-item"><span class="legend-dot" style="background:var(--danger-bg);border:0.5px solid var(--danger-border);"></span>Below 15%</span>
     <span class="legend-item"><span class="legend-dot" style="background:var(--success-bg);border:0.5px solid var(--success-border);"></span>15–20% (meets minimum)</span>
     <span class="legend-item"><span class="legend-dot" style="background:var(--success-strong);"></span>Above 20% (exceeds hurdle)</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--warning-bg);border:0.5px solid var(--warning-border);"></span>Target row</span>
-    <span class="legend-item" style="font-style:italic;">Italic = compound interest</span>
+    <span class="legend-item" style="font-style:italic;">Italic rows = compound interest</span>
   </div>
 
   <div class="table-wrap">
@@ -267,7 +203,7 @@
 
 <script>
 const CAPS = [1e6, 3e6, 6e6, 10e6];
-let BASE = 15, BPS = [0, 20, 30], TARGET = 17;
+let APR = 15;
 
 const fmt = v => v >= 1e6 ? '£'+(v/1e6).toFixed(3)+'M' : v >= 1e3 ? '£'+(v/1e3).toFixed(1)+'k' : '£'+Math.round(v);
 const fmtCap = v => '£'+(v/1e6).toFixed(0)+'M';
@@ -278,91 +214,48 @@ function aprBadge(a) {
   return `<span class="apr-badge apr-below">${a.toFixed(2)}%</span>`;
 }
 
-function mSimple(cap, apr) { return cap * apr / 100 / 12; }
-function mCompound(cap, apr, m) { const r = apr/100/12; return cap * r * Math.pow(1+r, m-1); }
-function ySimple(cap, apr) { return cap * apr / 100; }
-function yCompound(cap, apr) { const r = apr/100/12; return cap * (Math.pow(1+r,12)-1); }
+function mSimple(cap, apr)        { return cap * apr / 100 / 12; }
+function mCompound(cap, apr, m)   { const r = apr/100/12; return cap * r * Math.pow(1+r, m-1); }
+function ySimple(cap, apr)        { return cap * apr / 100; }
+function yCompound(cap, apr)      { const r = apr/100/12; return cap * (Math.pow(1+r,12)-1); }
 
 function buildHead() {
   const months = Array.from({length:12},(_,i)=>`<th>M${i+1}</th>`).join('');
   document.getElementById('rwxHead').innerHTML =
-    `<tr><th>Capital lent</th><th>BPS</th><th>Total APR</th><th>Type</th>${months}<th class="year1">Year 1</th></tr>`;
+    `<tr><th>Capital lent</th><th>APR</th><th>Type</th>${months}<th class="year1">Year 1</th></tr>`;
 }
 
 function buildBody() {
-  const neededBPS = Math.max(0, Math.round((TARGET - BASE) * 100 * 10) / 10);
-  const alreadyCovered = BPS.some(b => Math.abs(b - neededBPS) < 0.5);
-  const showTarget = TARGET > BASE && !alreadyCovered;
-
   let html = '';
-
   CAPS.forEach((cap, ci) => {
-    const scenarios = BPS.map(b => ({bps:b, isTarget:false}));
-    if (showTarget) scenarios.push({bps: neededBPS, isTarget: true});
-    scenarios.sort((a,b) => a.bps - b.bps);
+    const isFirst = ci === 0;
+    const isLast  = ci === CAPS.length - 1;
+    const fst = !isFirst ? ' cap-first' : '';
+    const sep = !isLast  ? ' cap-sep'   : '';
 
-    scenarios.forEach(({bps, isTarget}, si) => {
-      const apr = +(BASE + bps/100).toFixed(4);
-      const isLast = si === scenarios.length - 1;
-      const isFirst = si === 0;
-      const tgt = isTarget ? ' target-row' : '';
-      const sep = isLast ? ' cap-sep' : '';
-      const fst = isFirst ? ' cap-first' : '';
+    const sMo = Array.from({length:12},()=>`<td>${fmt(mSimple(cap,APR))}</td>`).join('');
+    const cMo = Array.from({length:12},(_,m)=>`<td class="compound">${fmt(mCompound(cap,APR,m+1))}</td>`).join('');
 
-      const bpsLabel = isTarget
-        ? `<span class="target-badge">target +${bps.toFixed(1)}</span>`
-        : bps === 0 ? '—' : `+${bps}`;
-
-      const sMo = Array.from({length:12},()=>`<td>${fmt(mSimple(cap,apr))}</td>`).join('');
-      const cMo = Array.from({length:12},(_,m)=>`<td class="compound">${fmt(mCompound(cap,apr,m+1))}</td>`).join('');
-
-      html += `<tr class="${tgt}${fst}">
-        <td rowspan="2" style="vertical-align:middle;">${fmtCap(cap)}</td>
-        <td rowspan="2" style="vertical-align:middle;">${bpsLabel}</td>
-        <td rowspan="2" style="vertical-align:middle;">${aprBadge(apr)}</td>
-        <td style="font-weight:500;">Simple</td>
-        ${sMo}
-        <td class="year1 ${tgt ? 'target-row' : ''}">${fmt(ySimple(cap,apr))}</td>
-      </tr>`;
-      html += `<tr class="${tgt}${sep}">
-        <td class="compound">Compound</td>
-        ${cMo}
-        <td class="compound year1">${fmt(yCompound(cap,apr))}</td>
-      </tr>`;
-    });
+    html += `<tr class="${fst}">
+      <td rowspan="2" style="vertical-align:middle;">${fmtCap(cap)}</td>
+      <td rowspan="2" style="vertical-align:middle;">${aprBadge(APR)}</td>
+      <td style="font-weight:500;">Simple</td>
+      ${sMo}
+      <td class="year1">${fmt(ySimple(cap,APR))}</td>
+    </tr>`;
+    html += `<tr class="${sep}">
+      <td class="compound">Compound</td>
+      ${cMo}
+      <td class="compound year1">${fmt(yCompound(cap,APR))}</td>
+    </tr>`;
   });
-
   document.getElementById('rwxBody').innerHTML = html;
 }
 
-function buildBPS() {
-  const wrap = document.getElementById('bpsWrap');
-  wrap.innerHTML = BPS.map((b,i) => `
-    <span class="bps-tag">
-      <input type="number" data-idx="${i}" value="${b}" min="0" max="10000" step="5">
-      <span class="bps-unit">bps</span>
-      ${BPS.length > 1 ? `<button class="rm-btn" data-rm="${i}" aria-label="Remove">×</button>` : ''}
-    </span>`).join('')
-    + `<button class="add-btn" id="addBtn"><i class="ti ti-plus" style="font-size:13px;vertical-align:-2px;"></i> Add</button>`;
+function refresh() { buildHead(); buildBody(); }
 
-  wrap.querySelectorAll('[data-idx]').forEach(inp =>
-    inp.addEventListener('input', () => { BPS[+inp.dataset.idx] = +inp.value || 0; refresh(); }));
-  wrap.querySelectorAll('[data-rm]').forEach(btn =>
-    btn.addEventListener('click', () => { BPS.splice(+btn.dataset.rm, 1); buildBPS(); refresh(); }));
-  document.getElementById('addBtn').addEventListener('click', () => { BPS.push(0); buildBPS(); refresh(); });
-}
+document.getElementById('baseAPR').addEventListener('input', e => { APR = +e.target.value || 0; refresh(); });
 
-function refreshNeeded() {
-  const n = Math.max(0, Math.round((TARGET - BASE) * 100 * 10) / 10);
-  document.getElementById('neededBPS').textContent = n.toFixed(1);
-}
-
-function refresh() { buildHead(); buildBody(); refreshNeeded(); }
-
-document.getElementById('baseAPR').addEventListener('input', e => { BASE = +e.target.value || 0; refresh(); });
-document.getElementById('targetAPR').addEventListener('input', e => { TARGET = +e.target.value || 0; refresh(); });
-
-buildBPS();
 refresh();
 </script>
 </body>

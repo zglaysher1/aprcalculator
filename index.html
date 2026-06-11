@@ -1,1 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdFi APR Calculator</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #ffffff; --bg-2: #f8f8f6; --bg-3: #f1efe8; --text: #2c2c2a;
+      --text-2: #5f5e5a; --text-3: #888780; --border: rgba(0,0,0,0.12);
+      --border-2: rgba(0,0,0,0.22); --radius: 8px; --radius-lg: 12px;
+      --success-bg: #eaf3de; --success-text: #3b6d11; --success-border: #97c459;
+      --success-strong: #639922; --danger-bg: #fcebeb; --danger-text: #a32d2d;
+      --danger-border: #f09595; --info-bg: #e6f1fb; --info-text: #185fa5;
+      --token-bg: #f3eeff; --token-text: #5b2fa8; --token-border: #c4a8f5;
+      --input-border: rgba(0,0,0,0.4);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a18; --bg-2: #222220; --bg-3: #2c2c2a; --text: #f1efe8;
+        --text-2: #b4b2a9; --text-3: #888780; --border: rgba(255,255,255,0.12);
+        --border-2: rgba(255,255,255,0.22); --success-bg: #1a3a08;
+        --success-text: #97c459; --success-border: #3b6d11; --success-strong: #c0dd97;
+        --danger-bg: #3a0808; --danger-text: #f09595; --danger-border: #a32d2d;
+        --info-bg: #0a2545; --info-text: #85b7eb;
+        --token-bg: #1e1030; --token-text: #c4a8f5; --token-border: #5b2fa8;
+        --input-border: rgba(255,255,255,0.4);
+      }
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: var(--bg-3); color: var(--text); min-height: 100vh; padding: 2rem 1.5rem; }
+    .page { max-width: 1500px; margin: 0 auto; }
+    h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+    .subtitle { font-size: 14px; color: var(--text-2); margin-bottom: 1.5rem; }
+    .controls { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 1.25rem; align-items: stretch; }
+    .control-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 0.75rem 1rem; }
+    .control-card.bps-card { flex: 1; min-width: 220px; }
+    .control-card.token-card { background: var(--token-bg); border-color: var(--token-border); }
+    .control-label { font-size: 11px; color: var(--text-2); text-transform: uppercase; letter-spacing: .04em; display: block; margin-bottom: 6px; }
+    .control-card.token-card .control-label { color: var(--token-text); }
+    .big-input-wrap { display: flex; align-items: baseline; gap: 4px; }
+    .big-input { width: 80px; font-size: 22px; font-weight: 500; border: none; border-bottom: 1.5px solid var(--input-border); padding: 2px 4px; background: transparent; color: var(--text); border-radius: 0; outline: none; }
+    .control-card.token-card .big-input { color: var(--token-text); border-color: var(--token-border); }
+    .big-unit { font-size: 13px; color: var(--text-2); }
+    .control-card.token-card .big-unit { color: var(--token-text); }
+    .bps-wrap { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 2px; }
+    .bps-tag { display: inline-flex; align-items: center; gap: 3px; background: var(--bg-2); border: 0.5px solid var(--border-2); border-radius: var(--radius); padding: 3px 8px; }
+    .bps-tag input { width: 48px; font-size: 13px; text-align: center; border: none; border-bottom: 1px solid var(--input-border); background: transparent; color: var(--text); padding: 0 2px; outline: none; }
+    .bps-tag .bps-unit { font-size: 11px; color: var(--text-2); }
+    .bps-tag .rm-btn { background: none; border: none; cursor: pointer; color: var(--text-2); font-size: 16px; line-height: 1; padding: 0 0 0 2px; }
+    .add-btn { font-size: 12px; padding: 4px 10px; cursor: pointer; background: transparent; border: 0.5px solid var(--border-2); border-radius: var(--radius); color: var(--text); font-family: inherit; }
+    .add-btn:hover { background: var(--bg-2); }
+    .legend { display: flex; gap: 14px; margin-bottom: 1rem; font-size: 11px; color: var(--text-2); flex-wrap: wrap; align-items: center; }
+    .legend-label { font-weight: 500; color: var(--text); font-size: 12px; }
+    .legend-item { display: flex; align-items: center; gap: 5px; }
+    .legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
+    .table-wrap { overflow-x: auto; border: 0.5px solid var(--border); border-radius: var(--radius-lg); background: var(--bg); }
+    table { border-collapse: collapse; white-space: nowrap; font-size: 12px; width: 100%; }
+    thead tr { background: var(--bg-3); }
+    th { padding: 8px 10px; font-size: 11px; font-weight: 500; color: var(--text-2); border-bottom: 0.5px solid var(--border-2); text-align: right; }
+    th:first-child { text-align: left; position: sticky; left: 0; background: var(--bg-3); min-width: 90px; }
+    th.center { text-align: center; }
+    th.left { text-align: left; }
+    th.year1 { border-left: 0.5px solid var(--border-2); font-weight: 500; color: var(--text); }
+    th.token-col { background: var(--token-bg); color: var(--token-text); border-left: 0.5px solid var(--token-border); }
+    td { padding: 6px 10px; border-bottom: 0.5px solid var(--border); text-align: right; color: var(--text); }
+    td:first-child { text-align: left; font-weight: 500; font-size: 14px; position: sticky; left: 0; background: var(--bg); border-right: 0.5px solid var(--border-2); }
+    td.center { text-align: center; }
+    td.left { text-align: left; }
+    td.year1 { border-left: 0.5px solid var(--border-2); font-weight: 500; }
+    td.compound { color: var(--text-2); font-style: italic; }
+    td.compound.year1 { color: var(--text-2); }
+    td.token-col { background: var(--token-bg); color: var(--token-text); border-left: 0.5px solid var(--token-border); font-style: italic; font-size: 11px; }
+    td.token-col.year1 { font-style: normal; font-size: 12px; font-weight: 500; }
+    .apr-badge { display: inline-block; padding: 2px 8px; border-radius: var(--radius); font-size: 11px; font-weight: 500; }
+    .apr-below   { background: var(--danger-bg);  color: var(--danger-text); }
+    .apr-meets   { background: var(--success-bg); color: var(--success-text); }
+    .apr-exceeds { background: var(--success-strong); color: #fff; }
+    tr.cap-sep td   { border-bottom: 1.5px solid var(--border-2); }
+    tr.cap-first td { border-top: 1.5px solid var(--border-2); }
+    .speculative-note { font-size: 11px; color: var(--token-text); margin-top: 0.75rem; opacity: 0.8; }
+    footer { margin-top: 1.5rem; font-size: 11px; color: var(--text-3); }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;flex-wrap:wrap;">
+    <h1>AdFi APR Calculator</h1>
+  </div>
+  <p class="subtitle">APR &nbsp;·&nbsp; Token sweetener = basis points of 1B ALKIMI supply</p>
 
+  <div class="controls">
+    <div class="control-card">
+      <span class="control-label">Cash APR</span>
+      <div class="big-input-wrap">
+        <input class="big-input" type="number" id="baseAPR" value="15" min="0" max="40" step="0.5">
+        <span class="big-unit">%</span>
+      </div>
+    </div>
+    <div class="control-card bps-card">
+      <span class="control-label">Token sweetener scenarios (bps of supply)</span>
+      <div class="bps-wrap" id="bpsWrap"></div>
+    </div>
+    <div class="control-card token-card">
+      <span class="control-label">ALKIMI token price (USD)</span>
+      <div class="big-input-wrap">
+        <span class="big-unit" style="margin-right:2px;">$</span>
+        <input class="big-input" type="number" id="tokenPrice" value="0.001142" min="0" step="0.000001" style="width:120px;font-size:18px;">
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span class="legend-label">Cash APR:</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--danger-bg);border:0.5px solid var(--danger-border);"></span>Below 15%</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--success-bg);border:0.5px solid var(--success-border);"></span>15-20% (meets minimum)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--success-strong);"></span>Above 20% (exceeds hurdle)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--token-bg);border:0.5px solid var(--token-border);"></span>Token columns (speculative)</span>
+    <span class="legend-item" style="font-style:italic;">Italic rows = compound interest</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead id="rwxHead"></thead>
+      <tbody id="rwxBody"></tbody>
+    </table>
+  </div>
+
+  <p class="speculative-note">
+    <i class="ti ti-alert-triangle" style="font-size:12px;vertical-align:-1px;"></i>
+    Token value columns use the price above for illustration only. Actual value at unlock may differ significantly.
+    Token count = BPS / 10,000 x 1,000,000,000 supply. Token value in USD at current price. Tokens released monthly (1/12 per month) across the 1-year lockup.
+  </p>
+
+  <footer>Alkimi Exchange &nbsp;·&nbsp; AdFi fundraising</footer>
+</div>
+
+<script>
+const TOTAL_SUPPLY = 1_000_000_000;
+const CAPS = [1e6, 3e6, 6e6, 10e6];
+let BASE = 15, BPS = [0, 100, 200, 500], TOKEN_PRICE = 0.001142;
+
+const fmtUSD = v => v >= 1e6 ? '$'+(v/1e6).toFixed(3)+'M' : v >= 1e3 ? '$'+(v/1e3).toFixed(1)+'k' : '$'+Math.round(v);
+const fmtCap = v => '$'+(v/1e6).toFixed(0)+'M';
+const fmtTok = v => v >= 1e6 ? (v/1e6).toFixed(2)+'M' : v >= 1e3 ? (v/1e3).toFixed(0)+'k' : v.toFixed(0);
+
+function tokensFromBPS(bps) { return (bps / 10000) * TOTAL_SUPPLY; }
+function tokenValueUSD(bps) { return tokensFromBPS(bps) * TOKEN_PRICE; }
+
+function aprBadge(a) {
+  if (a >= 20) return '<span class="apr-badge apr-exceeds">'+a.toFixed(2)+'% <i class="ti ti-trending-up" style="font-size:11px;"></i></span>';
+  if (a >= 15) return '<span class="apr-badge apr-meets">'+a.toFixed(2)+'%</span>';
+  return '<span class="apr-badge apr-below">'+a.toFixed(2)+'%</span>';
+}
+
+function mSimple(cap, apr)      { return cap * apr / 100 / 12; }
+function mCompound(cap, apr, m) { const r = apr/100/12; return cap * r * Math.pow(1+r, m-1); }
+function ySimple(cap, apr)      { return cap * apr / 100; }
+function yCompound(cap, apr)    { const r = apr/100/12; return cap * (Math.pow(1+r,12)-1); }
+
+function buildHead() {
+  const months = Array.from({length:12},(_,i)=>'<th>M'+(i+1)+'</th>').join('');
+  document.getElementById('rwxHead').innerHTML = '<tr><th>Capital lent</th><th class="center">BPS</th><th class="center">Tokens</th><th class="token-col center">Token value*</th><th class="center">Cash APR</th><th class="left">Type</th>'+months+'<th class="year1">Year 1 cash</th><th class="token-col year1">+ token value*</th></tr>';
+}
+
+function buildBody() {
+  let html = '';
+  CAPS.forEach(cap => {
+    const scenarios = BPS.slice().sort((a,b) => a-b);
+    scenarios.forEach((bps, si) => {
+      const isLast = si === scenarios.length - 1;
+      const isFirst = si === 0;
+      const sep = isLast ? ' cap-sep' : '';
+      const fst = isFirst ? ' cap-first' : '';
+      const tokens = tokensFromBPS(bps);
+      const tokVal = tokenValueUSD(bps);
+      const rowspan = bps === 0 ? 2 : 3;
+      const sMo = Array.from({length:12},()=>'<td>'+fmtUSD(mSimple(cap,BASE))+'</td>').join('');
+      const cMo = Array.from({length:12},(_,m)=>'<td class="compound">'+fmtUSD(mCompound(cap,BASE,m+1))+'</td>').join('');
+      const tMo = Array.from({length:12},()=>'<td class="token-col">'+fmtUSD(tokVal/12)+'</td>').join('');
+      const yr1s = ySimple(cap, BASE);
+      const yr1c = yCompound(cap, BASE);
+      const bpsLabel = bps === 0 ? '\u2014' : '+'+bps;
+      html += '<tr class="'+fst+'"><td rowspan="'+rowspan+'" style="vertical-align:middle;">'+fmtCap(cap)+'</td><td rowspan="'+rowspan+'" class="center" style="vertical-align:middle;">'+bpsLabel+'</td><td rowspan="'+rowspan+'" class="center" style="vertical-align:middle;">'+(bps===0?'\u2014':fmtTok(tokens))+'</td><td rowspan="'+rowspan+'" class="token-col center" style="vertical-align:middle;">'+(bps===0?'\u2014':fmtUSD(tokVal))+'</td><td rowspan="'+rowspan+'" class="center" style="vertical-align:middle;">'+aprBadge(BASE)+'</td><td style="font-weight:500;">Simple</td>'+sMo+'<td class="year1">'+fmtUSD(yr1s)+'</td><td class="token-col year1">'+(bps===0?'\u2014':fmtUSD(yr1s+tokVal))+'</td></tr>';
+      html += '<tr'+(bps===0?' class="'+sep+'"':'')+'><td class="compound">Compound</td>'+cMo+'<td class="compound year1">'+fmtUSD(yr1c)+'</td><td class="token-col compound year1">'+(bps===0?'\u2014':fmtUSD(yr1c+tokVal))+'</td></tr>';
+      if (bps > 0) {
+        html += '<tr class="'+sep+'"><td class="token-col" style="font-style:italic;">Token release</td>'+tMo+'<td class="token-col year1">\u2014</td><td class="token-col year1">'+fmtUSD(tokVal)+'</td></tr>';
+      }
+    });
+  });
+  document.getElementById('rwxBody').innerHTML = html;
+}
+
+function buildBPS() {
+  const wrap = document.getElementById('bpsWrap');
+  wrap.innerHTML = BPS.map((b,i) => '<span class="bps-tag"><input type="number" data-idx="'+i+'" value="'+b+'" min="0" max="10000" step="10"><span class="bps-unit">bps</span>'+(BPS.length>1?'<button class="rm-btn" data-rm="'+i+'" aria-label="Remove">&times;</button>':'')+'</span>').join('') + '<button class="add-btn" id="addBtn"><i class="ti ti-plus" style="font-size:13px;vertical-align:-2px;"></i> Add</button>';
+  wrap.querySelectorAll('[data-idx]').forEach(inp => inp.addEventListener('input', () => { BPS[+inp.dataset.idx] = +inp.value || 0; refresh(); }));
+  wrap.querySelectorAll('[data-rm]').forEach(btn => btn.addEventListener('click', () => { BPS.splice(+btn.dataset.rm, 1); buildBPS(); refresh(); }));
+  document.getElementById('addBtn').addEventListener('click', () => { BPS.push(0); buildBPS(); refresh(); });
+}
+
+function refresh() { buildHead(); buildBody(); }
+document.getElementById('baseAPR').addEventListener('input', e => { BASE = +e.target.value || 0; refresh(); });
+document.getElementById('tokenPrice').addEventListener('input', e => { TOKEN_PRICE = +e.target.value || 0; refresh(); });
+buildBPS();
+refresh();
+</script>
+</body>
+</html>
